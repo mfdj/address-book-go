@@ -4,7 +4,7 @@ MYSQL_USER=${MYSQL_USER:-goldie}
 MYSQL_DB=${MYSQL_DB:-address_book_go}
 
 query() { 
-	mysql -u "${MYSQL_USER}" -p"${MYSQL_PASS}" -e "$1;" "$MYSQL_DB" 2> /dev/null
+	mysql -u "${MYSQL_USER}" -p"${MYSQL_PASS}" -e "$1;" "$MYSQL_DB"
 }
 
 query_match() {
@@ -24,6 +24,8 @@ query_match() {
 finally() {
    if query_match 'show tables' 'person' 'address' &> /dev/null; then
       query 'show tables'
+      query 'select * from person'
+      query 'select * from address'
       exit
    fi
 
@@ -31,7 +33,7 @@ finally() {
 }
 
 if query_match 'show tables' 'person' 'address'; then
-   if [[ $1 != clean ]]; then
+   if [[ $1 != 'reset' ]]; then
       finally
    fi
 
@@ -42,8 +44,8 @@ fi
 query '
    CREATE TABLE person(
      id    MEDIUMINT    NOT NULL AUTO_INCREMENT,
-     first   varchar(255) NOT NULL,
-     last    varchar(255) NOT NULL,
+     first varchar(255) NOT NULL,
+     last  varchar(255) NOT NULL,
 
      PRIMARY KEY (id)
    );
@@ -58,6 +60,18 @@ query '
 
      PRIMARY KEY (id)
    );
+'
+
+query '
+INSERT INTO person (first, last) VALUES
+   ("Tuna", "Lowland"),
+   ("Shöwee", "Clocks")
+;
+
+INSERT INTO address (person_id, street, city, state, zip) VALUES
+   (0, "133 49th Ave", "Beverly Hills", "CA", "90210"),
+   (1, "52 Larpenteur St", "San Franciso", "CA", "94016")
+;
 '
 
 finally
