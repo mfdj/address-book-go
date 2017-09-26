@@ -4,17 +4,10 @@ import (
    "database/sql"
    _ "github.com/go-sql-driver/mysql"
    "fmt"
+   "./models"
 )
 
 var db *sql.DB
-
-type Address struct {
-   PersonId int
-   Street   string
-   City     string
-   State    string
-   Zip      string
-}
 
 func main() {
    db, err := sql.Open("mysql", "goldie:gopher@/address_book_go")
@@ -36,7 +29,7 @@ func main() {
    defer rows.Close()
    
    for rows.Next() {
-      adrs := new(Address)
+      adrs := new(models.Address)
       err := rows.Scan(&adrs.PersonId, &adrs.Street, &adrs.City, &adrs.State, &adrs.Zip)
       if err != nil {
          panic(err.Error())
