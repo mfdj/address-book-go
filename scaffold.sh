@@ -65,13 +65,18 @@ query '
 query '
 INSERT INTO person (first, last) VALUES
    ("Tuna", "Lowland"),
-   ("Shöwee", "Clocks")
-;
+   ("Shöwee", "Clocks"),
+   ("Quark", "Twin")
+'
 
+query '
 INSERT INTO address (person_id, street, city, state, zip) VALUES
-   (0, "133 49th Ave", "Beverly Hills", "CA", "90210"),
-   (1, "52 Larpenteur St", "San Franciso", "CA", "94016")
-;
+   (1, "133 49th Ave", "Beverly Hills", "CA", "90210"),
+   (2, "52 Larpenteur St", "San Franciso", "CA", "94016"),
+   (1, "155 Travelington Lt", "NYC", "NY", "10001"),
+   (3, "7 Rabbit Ln.", "Seattle", "WA", "98101"),
+   (3, "450 Livingston Pkwy.", "Pittsburg", "PA", "94565"),
+   (3, "2243 Juicy Lucy Ave.", "Minneapolis", "MN", "55407")
 '
 
 finally

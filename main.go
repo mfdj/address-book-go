@@ -16,7 +16,7 @@ func main() {
 	length := len(addresses)
 
 	fmt.Println("Addresses: " + strconv.Itoa(length))
-	
+
 	for i := 0; i < length; i++ {
 		address := addresses[i]
 		fmt.Println(address.City)
@@ -24,7 +24,13 @@ func main() {
 }
 
 func fetchAddresses(db *sql.DB) []*model.Address {
-	rows, err := db.Query("SELECT person_id, street, city, state, zip FROM address")
+	rows, err := db.Query(`
+		SELECT address.id, person_id, first, last, street, city, state, zip 
+		FROM address
+		INNER JOIN person
+		ON address.person_id = person.id
+	`)
+
 	if err != nil {
 		panic(err.Error())
 	}
@@ -34,7 +40,7 @@ func fetchAddresses(db *sql.DB) []*model.Address {
 
 	for rows.Next() {
 		adrs := new(model.Address)
-		err := rows.Scan(&adrs.PersonId, &adrs.Street, &adrs.City, &adrs.State, &adrs.Zip)
+		err := rows.Scan(&adrs.Id, &adrs.PersonId, &adrs.First, &adrs.Last, &adrs.Street, &adrs.City, &adrs.State, &adrs.Zip)
 		if err != nil {
 			panic(err.Error())
 		}
