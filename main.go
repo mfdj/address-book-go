@@ -12,9 +12,8 @@ func main() {
 	defer db.Close()
 
 	addresses := fetchAddresses(db)
-	length := len(addresses)
 
-	fmt.Printf("Found %d addresses\n", length)
+	fmt.Printf("Found %d addresses\n", len(addresses))
 
 	for _, address := range addresses {
 		fmt.Println(address.City)
