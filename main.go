@@ -5,6 +5,9 @@ import (
 	"./storage"
 	"database/sql"
 	"fmt"
+	"encoding/csv"
+	"log"
+	"os"
 )
 
 func main() {
@@ -13,10 +16,39 @@ func main() {
 
 	addresses := fetchAddresses(db)
 
-	fmt.Printf("Found %d addresses\n", len(addresses))
+	// Make concurrent:
+	// go func() {
+	// }()
 
+	fmt.Printf("Found %d addresses\n", len(addresses))
 	for _, address := range addresses {
 		fmt.Println(address.City)
+	}
+
+	// concurrent read then interleave results
+
+	fetchCsv("./people.csv")
+	fetchCsv("./addresses.csv")
+}
+
+func fetchCsv(path string) {
+	f, err := os.Open(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	data := csv.NewReader(f)
+
+	records, err := data.ReadAll()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for i, row := range records {
+		if i > 0 {
+			fmt.Print(row)
+		}
 	}
 }
 
