@@ -43,22 +43,22 @@ fi
 
 query '
    CREATE TABLE person(
-     id    MEDIUMINT    NOT NULL AUTO_INCREMENT,
-     first varchar(255) NOT NULL,
-     last  varchar(255) NOT NULL,
+      id    MEDIUMINT    NOT NULL AUTO_INCREMENT,
+      first varchar(255) NOT NULL,
+      last  varchar(255) NOT NULL,
 
-     PRIMARY KEY (id)
+      PRIMARY KEY (id)
    );
 
    CREATE TABLE address (
-     id        MEDIUMINT    NOT NULL AUTO_INCREMENT,
-     person_id MEDIUMINT    NOT NULL,
-     street    varchar(255) NOT NULL,
-     city      varchar(255) NOT NULL,
-     state     varchar(255) NOT NULL,
-     zip       varchar(16)  NOT NULL,
+      id        MEDIUMINT    NOT NULL AUTO_INCREMENT,
+      person_id MEDIUMINT    NOT NULL,
+      street    varchar(255) NOT NULL,
+      city      varchar(255) NOT NULL,
+      state     varchar(255) NOT NULL,
+      zip       varchar(16)  NOT NULL,
 
-     PRIMARY KEY (id)
+      PRIMARY KEY (id)
    );
 '
 
