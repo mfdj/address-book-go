@@ -11,11 +11,19 @@ import (
 func main() {
 	db := storage.InitDb("goldie:gopher@/address_book_go")
 	defer db.Close()
-	length := len(collectRows(db))
+
+	addresses := fetchAddresses(db)
+	length := len(addresses)
+
 	fmt.Println("Addresses: " + strconv.Itoa(length))
+	
+	for i := 0; i < length; i++ {
+		address := addresses[i]
+		fmt.Println(address.City)
+	}
 }
 
-func collectRows(db *sql.DB) []*model.Address {
+func fetchAddresses(db *sql.DB) []*model.Address {
 	rows, err := db.Query("SELECT person_id, street, city, state, zip FROM address")
 	if err != nil {
 		panic(err.Error())
