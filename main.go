@@ -17,8 +17,7 @@ func main() {
 
 	fmt.Println("Addresses: " + strconv.Itoa(length))
 
-	for i := 0; i < length; i++ {
-		address := addresses[i]
+	for _, address := range addresses {
 		fmt.Println(address.City)
 	}
 }
