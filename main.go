@@ -5,7 +5,6 @@ import (
 	"./storage"
 	"database/sql"
 	"fmt"
-	"strconv"
 )
 
 func main() {
@@ -15,7 +14,7 @@ func main() {
 	addresses := fetchAddresses(db)
 	length := len(addresses)
 
-	fmt.Println("Addresses: " + strconv.Itoa(length))
+	fmt.Printf("Found %d addresses\n", length)
 
 	for _, address := range addresses {
 		fmt.Println(address.City)
